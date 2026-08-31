@@ -1,0 +1,227 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report Climate Problem | UPYA GreenLink</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="report.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <span>UPYA</span> GreenLink
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="report.html" class="active">Report</a>
+        <a href="index.html#impact">Impact</a>
+        <a href="index.html#how">How It Works</a>
+    </nav>
+
+</header>
+
+
+<main class="report-page">
+
+    <div class="report-header">
+
+        <div class="report-badge">
+            🚨 CLIMATE REPORTING
+        </div>
+
+        <h1>Report a Climate Problem</h1>
+
+        <p>
+            See an environmental problem in your community?
+            Report it and help UPYA connect the problem with action.
+        </p>
+
+    </div>
+
+
+    <form id="reportForm" class="report-form">
+
+        <!-- CATEGORY -->
+
+        <div class="form-section">
+
+            <h2>1. What is the problem?</h2>
+
+            <label for="category">Problem Category</label>
+
+            <select id="category" required>
+
+                <option value="">Select a category</option>
+
+                <option value="Waste">♻️ Waste & Illegal Dumping</option>
+
+                <option value="Flooding">🌊 Flooding & Drainage</option>
+
+                <option value="Deforestation">🌳 Deforestation</option>
+
+                <option value="Water">💧 Water Challenge</option>
+
+                <option value="Drought">☀️ Drought</option>
+
+                <option value="Pollution">🏭 Pollution</option>
+
+                <option value="Other">🌍 Other Environmental Problem</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-section">
+
+            <h2>2. Describe the problem</h2>
+
+            <label for="description">What did you observe?</label>
+
+            <textarea
+                id="description"
+                rows="5"
+                placeholder="Example: Waste has been dumped beside the road and has been there for several weeks..."
+                required>
+            </textarea>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="form-section">
+
+            <h2>3. Where is it?</h2>
+
+            <label for="location">Location</label>
+
+            <input
+                type="text"
+                id="location"
+                placeholder="Example: Nyamgun Junction, Seme"
+                required
+            >
+
+            <button
+                type="button"
+                class="location-btn"
+                onclick="getLocation()">
+                📍 Use My Location
+            </button>
+
+            <p id="locationStatus" class="location-status"></p>
+
+        </div>
+
+
+        <!-- PHOTO -->
+
+        <div class="form-section">
+
+            <h2>4. Add a photo</h2>
+
+            <label for="photo">Evidence Photo</label>
+
+            <input
+                type="file"
+                id="photo"
+                accept="image/*"
+            >
+
+            <div id="photoPreview" class="photo-preview"></div>
+
+        </div>
+
+
+        <!-- URGENCY -->
+
+        <div class="form-section">
+
+            <h2>5. How urgent is it?</h2>
+
+            <div class="urgency-options">
+
+                <label>
+                    <input
+                        type="radio"
+                        name="urgency"
+                        value="Low"
+                        required>
+                    🟢 Low
+                </label>
+
+                <label>
+                    <input
+                        type="radio"
+                        name="urgency"
+                        value="Medium">
+                    🟡 Medium
+                </label>
+
+                <label>
+                    <input
+                        type="radio"
+                        name="urgency"
+                        value="High">
+                    🔴 High
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUBMIT -->
+
+        <button type="submit" class="submit-report">
+            🚨 Submit Climate Report
+        </button>
+
+        <p class="privacy-note">
+            Your information will be used to help coordinate
+            environmental action in the community.
+        </p>
+
+    </form>
+
+
+    <!-- SUCCESS MESSAGE -->
+
+    <div id="successMessage" class="success-message">
+
+        <div class="success-icon">✓</div>
+
+        <h2>Report Submitted!</h2>
+
+        <p>
+            Thank you for helping your community.
+            Your climate report has been recorded.
+        </p>
+
+        <div id="reportNumber"></div>
+
+        <a href="index.html">
+            ← Return to GreenLink
+        </a>
+
+    </div>
+
+</main>
+
+
+<script src="report.js"></script>
+
+</body>
+</html>
+```
