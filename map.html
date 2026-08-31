@@ -1,0 +1,190 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Climate Action Map | UPYA GreenLink</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="map.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <span>UPYA</span> GreenLink
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="report.html">Report</a>
+        <a href="map.html" class="active">Climate Map</a>
+        <a href="index.html#impact">Impact</a>
+    </nav>
+
+</header>
+
+
+<main class="map-page">
+
+    <div class="map-header">
+
+        <div>
+            <div class="map-badge">
+                🗺️ CLIMATE ACTION MAP
+            </div>
+
+            <h1>See Climate Action<br><span>Near You.</span></h1>
+
+            <p>
+                Explore environmental challenges and
+                climate projects reported by communities.
+            </p>
+        </div>
+
+        <a href="report.html" class="map-report-btn">
+            🚨 Report a Problem
+        </a>
+
+    </div>
+
+
+    <!-- FILTERS -->
+
+    <div class="map-filters">
+
+        <button class="filter active"
+                onclick="filterMap('all', this)">
+            🌍 All
+        </button>
+
+        <button class="filter"
+                onclick="filterMap('waste', this)">
+            ♻️ Waste
+        </button>
+
+        <button class="filter"
+                onclick="filterMap('flooding', this)">
+            🌊 Flooding
+        </button>
+
+        <button class="filter"
+                onclick="filterMap('trees', this)">
+            🌳 Trees
+        </button>
+
+        <button class="filter"
+                onclick="filterMap('water', this)">
+            💧 Water
+        </button>
+
+        <button class="filter"
+                onclick="filterMap('project', this)">
+            ✅ Projects
+        </button>
+
+    </div>
+
+
+    <!-- MAP -->
+
+    <div class="map-container">
+
+        <div id="climateMap"></div>
+
+    </div>
+
+
+    <!-- LEGEND -->
+
+    <div class="map-legend">
+
+        <h3>Map Legend</h3>
+
+        <div>
+            <span class="legend-dot waste"></span>
+            Waste Problem
+        </div>
+
+        <div>
+            <span class="legend-dot flooding"></span>
+            Flooding
+        </div>
+
+        <div>
+            <span class="legend-dot trees"></span>
+            Tree Project
+        </div>
+
+        <div>
+            <span class="legend-dot water"></span>
+            Water Challenge
+        </div>
+
+        <div>
+            <span class="legend-dot project"></span>
+            Completed Project
+        </div>
+
+    </div>
+
+
+    <!-- INFO CARDS -->
+
+    <section class="map-info">
+
+        <div class="map-info-card">
+
+            <span>🚨</span>
+
+            <div>
+                <strong>3</strong>
+                <p>Active Climate Reports</p>
+            </div>
+
+        </div>
+
+
+        <div class="map-info-card">
+
+            <span>🌱</span>
+
+            <div>
+                <strong>4</strong>
+                <p>Climate Projects</p>
+            </div>
+
+        </div>
+
+
+        <div class="map-info-card">
+
+            <span>🙋</span>
+
+            <div>
+                <strong>86</strong>
+                <p>Volunteers Active</p>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="map.js"></script>
+
+</body>
+</html>
+```
