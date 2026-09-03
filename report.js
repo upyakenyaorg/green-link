@@ -1,82 +1,148 @@
-// ================================
-// UPYA GREENLINK - REPORT SYSTEM
-// ================================
+// ========================================
+// UPYA GREENLINK REPORT SYSTEM
+// ========================================
 
-// PASTE YOUR SUPABASE DETAILS HERE
-const SUPABASE_URL = "https://treciudfeaariziivopd.supabase.co/rest/v1/";
+// YOUR SUPABASE DETAILS
+const SUPABASE_URL = "https://treciudfeaariziivopd.supabase.co";
 const SUPABASE_KEY = "sb_publishable_4d5zawsmlIT6vpWXXcEUqA_4-h5rA40";
 
-// Load Supabase
-const { createClient } = supabase;
+// Create Supabase connection
+const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
-const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ========================================
+// VARIABLES
+// ========================================
+
+let latitude = null;
+let longitude = null;
 
 
-// ================================
-// GET FORM ELEMENTS
-// ================================
+// ========================================
+// GET FORM
+// ========================================
 
 const reportForm = document.getElementById("reportForm");
-const successMessage = document.getElementById("successMessage");
 
 
-// ================================
-// SUBMIT REPORT
-// ================================
+// ========================================
+// USE MY LOCATION
+// ========================================
 
-reportForm.addEventListener("submit", async function (event) {
+function getLocation() {
 
-    event.preventDefault();
+    const locationStatus =
+        document.getElementById("locationStatus");
 
-    const category = document.getElementById("category").value;
-    const description = document.getElementById("description").value;
-    const location = document.getElementById("location").value;
-    const urgency = document.getElementById("urgency").value;
+    if (!navigator.geolocation) {
 
-    // Generate report ID
-    const reportID =
-        "GL-" +
-        Date.now().toString().slice(-6);
+        locationStatus.textContent =
+            "❌ Location is not supported by this browser.";
 
+        return;
+    }
 
-    // ================================
-    // GET GPS LOCATION
-    // ================================
+    locationStatus.textContent =
+        "📍 Getting your location...";
 
-    let latitude = null;
-    let longitude = null;
+    navigator.geolocation.getCurrentPosition(
 
-    if (navigator.geolocation) {
-
-        try {
-
-            const position = await new Promise((resolve, reject) => {
-
-                navigator.geolocation.getCurrentPosition(
-                    resolve,
-                    reject,
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 10000
-                    }
-                );
-
-            });
+        function(position) {
 
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
 
-        } catch (error) {
+            locationStatus.textContent =
+                "✅ Location captured successfully.";
 
-            console.log("GPS location not available.");
+        },
+
+        function(error) {
+
+            console.log(error);
+
+            locationStatus.textContent =
+                "⚠️ Could not get your location. You can enter it manually.";
 
         }
+    );
+}
+
+
+// ========================================
+// PHOTO PREVIEW
+// ========================================
+
+const photoInput = document.getElementById("photo");
+const photoPreview = document.getElementById("photoPreview");
+
+photoInput.addEventListener("change", function() {
+
+    photoPreview.innerHTML = "";
+
+    const file = photoInput.files[0];
+
+    if (!file) {
+        return;
     }
 
+    const image = document.createElement("img");
 
-    // ================================
-    // SAVE TO SUPABASE
-    // ================================
+    image.src = URL.createObjectURL(file);
+
+    image.style.maxWidth = "100%";
+    image.style.maxHeight = "300px";
+    image.style.borderRadius = "12px";
+    image.style.marginTop = "10px";
+
+    photoPreview.appendChild(image);
+});
+
+
+// ========================================
+// SUBMIT REPORT
+// ========================================
+
+reportForm.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const submitButton =
+        document.querySelector(".submit-report");
+
+    submitButton.disabled = true;
+
+    submitButton.textContent =
+        "Submitting...";
+
+
+    // Get form information
+    const category =
+        document.getElementById("category").value;
+
+    const description =
+        document.getElementById("description").value.trim();
+
+    const location =
+        document.getElementById("location").value.trim();
+
+    const urgency =
+        document.querySelector(
+            'input[name="urgency"]:checked'
+        ).value;
+
+
+    // Generate report number
+    const reportID =
+        "GL-" + Date.now().toString().slice(-6);
+
+
+    // ========================================
+    // SEND TO SUPABASE
+    // ========================================
 
     const { data, error } = await db
         .from("climate_reports")
@@ -95,50 +161,41 @@ reportForm.addEventListener("submit", async function (event) {
         .select();
 
 
-    // ================================
-    // CHECK FOR ERRORS
-    // ================================
+    // ========================================
+    // HANDLE ERROR
+    // ========================================
 
     if (error) {
 
-        console.error(error);
+        console.error("SUPABASE ERROR:", error);
 
         alert(
-            "Report could not be submitted.\n\n" +
+            "The report could not be submitted.\n\n" +
             error.message
         );
+
+        submitButton.disabled = false;
+
+        submitButton.textContent =
+            "🚨 Submit Climate Report";
 
         return;
     }
 
 
-    // ================================
+    // ========================================
     // SUCCESS
-    // ================================
+    // ========================================
 
     reportForm.style.display = "none";
 
+    const successMessage =
+        document.getElementById("successMessage");
+
     successMessage.style.display = "block";
 
-    successMessage.innerHTML = `
-        <div class="success-box">
-
-            <h2>🌱 Report Submitted!</h2>
-
-            <p>
-                Thank you for helping your community.
-                Your climate report has been received by UPYA GreenLink.
-            </p>
-
-            <h3>Report ID</h3>
-
-            <strong>${reportID}</strong>
-
-            <p>
-                Keep this ID for future reference.
-            </p>
-
-        </div>
+    document.getElementById("reportNumber").innerHTML = `
+        <strong>Report ID: ${reportID}</strong>
     `;
 
 });
