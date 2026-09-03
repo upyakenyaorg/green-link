@@ -3,8 +3,8 @@
 // ================================
 
 // PASTE YOUR SUPABASE DETAILS HERE
-const SUPABASE_URL = "sb_publishable_4d5zawsmlIT6vpWXXcEUqA_4-h5rA40";
-const SUPABASE_KEY = "https://treciudfeaariziivopd.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://treciudfeaariziivopd.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_4d5zawsmlIT6vpWXXcEUqA_4-h5rA40";
 
 // Load Supabase
 const { createClient } = supabase;
